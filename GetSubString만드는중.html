@@ -1,0 +1,147 @@
+<html>
+<body onload="MAIN()">
+    <input type="button" id="hw" value="Hello world" />
+
+<script type="text/javascript">
+
+//****************************************************************
+//문자열에서 시작과 끝 문자열 구간을 찾아 리턴한다.
+//str            : 탐색대상 문자열
+//startString    : 탐색 시작 문자열
+//endString      : 탐색 종료 문자열
+//findStrInclude : 리턴값에 탐색 문자열 포함여부
+//findString     : 탐색된 문자열 내 체크 문자열
+//****************************************************************
+function sg_GetSubString(str, startString, endString, findStrInclude, findString) {
+    // 여기에 코드를 작성하세요.
+    var result = "";
+    var idx = 0;
+    var tmp = 0;
+    var findSubStr = 0; //
+    if(0 == findString)
+        return "SG_NA";
+    if(isNaN(findString))//숫자가 아닐때
+    { 
+        if(findStrInclude == true)  //findstrInclude가 true일때 태그 포함 출력
+        {
+            while(-1 != tmp){
+                tmp = str.indexOf(startString, idx);    //시작문자열과 끝문자열의 시작 위치를 저장함
+                idx = str.indexOf(endString, tmp);
+                findSubStr = str.substr(tmp, idx-tmp+endString.length); //endString의 길이를 구해서 더해준다 끝문자열의 시작위치를 반환하기 때문에 끝위치를 얻기위해서
+                var findIdx = findSubStr.indexOf(findString);   //시작문자열과 끝문자열 사이의 문자열에서 findString위치를 찾는다.
+                //alert('tmp : '+ tmp +'\nidx : '+ idx + "\nfindSubStr : \n" + findSubStr + "\nfindIdx : " + findIdx);
+                if(findIdx != -1)   //
+                {
+                    result = findSubStr;
+                    //alert("결과 : \n" + result); 
+                    return result;
+                }
+            }
+
+        }else if(findStrInclude == false)   //태그 미포함 출력
+        {
+            while(-1 != tmp){
+                tmp = str.indexOf(startString, idx);
+                idx = str.indexOf(endString, tmp);
+                findSubStr = str.substr(tmp+startString.length, idx-tmp-startString.length); //시작위치는 시작문자열 길이만큼 더해서 태그안나오게 하고 끝위치는 빼서 위치를 맞춘다.
+                findSubStr = findSubStr.trim();     //앞뒤 개행문자 제거
+                var findIdx = findSubStr.indexOf(findString);
+                //alert('tmp : '+ tmp +'\nidx : '+ idx + "\nfindSubStr : \n" + findSubStr + "\nfindIdx : " + findIdx);
+                if(findIdx != -1)//찾을 문자열을 찾지 못했을때,
+                {
+                    result = findSubStr;
+                    //alert("결과 : \n" + result); 
+                    return result;
+                }
+            }
+        }
+    }else if(!isNaN(findString))//숫자일때 그만큼 움직임
+    {
+        if(findStrInclude == true)  //findstrInclude가 true일때 태그 포함 출력
+        {
+            while(-1 != tmp){
+                if(findString > 0)
+                {
+                    tmp = str.indexOf(startString, idx);
+                    idx = str.indexOf(endString, tmp);
+                    findSubStr = str.substr(tmp, idx-tmp+endString.length); //endString의 길이를 구해서 더해준다 끝문자열의 시작위치를 반환하기 때문에 끝위치를 얻기위해서
+                    //alert('tmp : '+ tmp +'\nidx : '+ idx + "\nfindSubStr : \n" + findSubStr + "\nfindString : " + findString);
+                    
+                    findString--;
+                }else if(findString == 0)
+                {
+                        result = findSubStr;
+                        //alert("결과 : \n" + result);
+                        return result;
+                }else{
+                    return "SG_NA";
+                }
+            }
+
+        }else if(findStrInclude == false)   //태그 미포함 출력
+        {
+            while(-1 != tmp){
+                if(findString > 0)
+                {
+                    tmp = str.indexOf(startString, idx);
+                    idx = str.indexOf(endString, tmp);
+                    findSubStr = str.substr(tmp+startString.length, idx-tmp-startString.length); //시작위치는 시작문자열길이만큼 더해서 태그안나오게 하고 끝위치는 빼서 위치를 맞춘다.
+                    findSubStr = findSubStr.trim();     //앞뒤 개행문자 제거
+                    findString--;
+                    //alert('tmp : '+ tmp +'\nidx : '+ idx + "\nfindSubStr : \n" + findSubStr + "\nfindString : " + findString);
+                }else if(findString == 0)
+                {
+                    result = findSubStr;
+                    //alert("결과 : \n" + result);
+                    return result;
+                }else{
+                    return "SG_NA";
+                }
+            }
+        }
+    }
+    return "SG_NA";
+}
+
+function MAIN() {
+    var s = "";
+    s += "<html>\n";
+    s += "<body>\n";
+    s += "  <table>\n";
+    s += "      <caption>공지사항</caption>\n";
+    s += "  </table>\n";
+    s += "  <table>\n";
+    s += "      <caption>사용자정보</caption>\n";
+    s += "  </table>\n";
+    s += "  <table>\n";
+    s += "      <caption>게시판</caption>\n";
+    s += "          <div>첫번째</div>\n";
+    s += "  </table>\n";
+    s += "  <table>\n";
+    s += "      <caption>게시판</caption>\n";
+    s += "          <div>두번째</div>\n";
+    s += "  </table>\n";
+    s += "  <table>\n";
+    s += "      <caption>게시판</caption>\n";
+    s += "          <div>세번째</div>\n";
+    s += "  </table>\n";
+    s += "  <table>\n";
+    s += "      <caption>사용자정보</caption>\n";
+    s += "  </table>\n";
+    s += "</body>\n";
+    s += "</html>\n";
+
+    var htmlTable = sg_GetSubString(s, '<table>', '</table>', true, '세번째');
+    var htmlTable2 = sg_GetSubString(s, '<table>', '</table>', false, '두번째');
+    var htmlTable3 = sg_GetSubString(s, '<table>', '</table>', true, 3);       
+    var htmlTable4 = sg_GetSubString(s, '<table>', '</table>', false, 4);
+    alert(htmlTable);
+    //alert(htmlTable2);
+    //alert(htmlTable3);
+    //alert(htmlTable4);
+	}
+    
+</script>
+</body>
+</html>
+
